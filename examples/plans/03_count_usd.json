@@ -1,0 +1,15 @@
+{
+ "_question": "Сколько сделок в долларах США?",
+ "language": "ru",
+ "intent": "count",
+ "metrics": [
+  "deal_count"
+ ],
+ "filters": [
+  {
+   "field": "currency",
+   "op": "eq",
+   "value": "USD"
+  }
+ ]
+}

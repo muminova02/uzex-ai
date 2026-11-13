@@ -1,0 +1,19 @@
+{
+ "_question": "Сколько сделок в Ташкенте в 2025?",
+ "language": "ru",
+ "intent": "count",
+ "period": {
+  "start": "2025-01-01",
+  "end": "2025-12-31",
+  "label": "2025"
+ },
+ "metrics": [
+  "deal_count"
+ ],
+ "entities": [
+  {
+   "kind": "region",
+   "text": "Ташкенте"
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "_question": "Покажи сделку 387831",
+ "language": "ru",
+ "intent": "lookup",
+ "entities": [
+  {
+   "kind": "deal",
+   "text": "387831"
+  }
+ ]
+}

@@ -1,0 +1,29 @@
+{
+ "_question": "Сколько сделок по нефтепродуктам и на какую сумму купили покупатели из Самаркандской области в 2024 году?",
+ "language": "ru",
+ "intent": "aggregate",
+ "period": {
+  "start": "2024-01-01",
+  "end": "2024-12-31",
+  "label": "2024"
+ },
+ "metrics": [
+  "deal_count",
+  "trade_value_uzs"
+ ],
+ "entities": [
+  {
+   "kind": "region",
+   "text": "Самаркандской области",
+   "catalog_hint": "samarkand",
+   "role": "buyer_region"
+  }
+ ],
+ "filters": [
+  {
+   "field": "product_category",
+   "op": "eq",
+   "value": "Нефтепродукты"
+  }
+ ]
+}

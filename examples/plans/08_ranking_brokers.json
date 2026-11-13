@@ -1,0 +1,12 @@
+{
+ "_question": "Топ-5 брокеров по числу сделок (любая сторона)",
+ "language": "ru",
+ "intent": "ranking",
+ "metrics": [
+  "deal_count"
+ ],
+ "group_by": [
+  "any_broker"
+ ],
+ "top_n": 5
+}

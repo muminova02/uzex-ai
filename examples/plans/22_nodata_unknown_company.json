@@ -1,0 +1,14 @@
+{
+ "_question": "Сколько сделок у компании Galaktika Neft Invest?",
+ "language": "ru",
+ "intent": "count",
+ "metrics": [
+  "deal_count"
+ ],
+ "entities": [
+  {
+   "kind": "participant",
+   "text": "Galaktika Neft Invest"
+  }
+ ]
+}

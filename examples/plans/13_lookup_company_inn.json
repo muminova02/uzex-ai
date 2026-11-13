@@ -1,0 +1,11 @@
+{
+ "_question": "915688255 STIR raqamli kompaniya haqida ma'lumot",
+ "language": "uz",
+ "intent": "lookup",
+ "entities": [
+  {
+   "kind": "participant",
+   "text": "915688255"
+  }
+ ]
+}

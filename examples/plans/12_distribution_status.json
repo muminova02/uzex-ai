@@ -1,0 +1,16 @@
+{
+ "_question": "Распределение сделок 2025 года по статусам",
+ "language": "ru",
+ "intent": "aggregate",
+ "period": {
+  "start": "2025-01-01",
+  "end": "2025-12-31",
+  "label": "2025"
+ },
+ "metrics": [
+  "deal_count"
+ ],
+ "group_by": [
+  "status"
+ ]
+}

@@ -1,0 +1,89 @@
+# UZEX Data Assistant — frozen-build deployment (no auto-update, no auto-ingestion, no watchtower).
+#
+#   docker compose build                      # once, before the freeze (2026-11-05 18:00 Asia/Tashkent)
+#   docker compose run --rm import            # one-time import (re-run is a no-op if sources are unchanged)
+#   docker compose up -d --no-build web bot   # start / restart the SAME frozen image
+#
+# Secrets come only from .env, bind-mounted read-only at run time and parsed by the app (python-dotenv, so
+# inline comments work). Docker `env_file` is NOT used: it keeps inline comments as part of the value.
+# Variables under `environment:` take precedence over .env. Nothing secret is in the image or this file.
+# Volumes: ./uzex_spot_data (raw CSVs, read-only), ./data/db (prepared DuckDB: written ONLY by `import`,
+# read-only for web/bot), ./data/state (shared LLM quota gate, bot heartbeat).
+
+x-runtime: &runtime
+  image: uzex-assistant:${UZEX_IMAGE_TAG:-local}
+  pull_policy: never              # never fetch a different image from a registry
+  environment: &limits
+    UZEX_RUNTIME_IMPORT: "false"  # runtime never re-imports; a stale/missing DB stops it with an error
+    UZEX_DATA_DIR: /data/source
+    UZEX_DB_PATH: /data/db/uzex.duckdb
+    UZEX_LLM_GATE_PATH: /data/state/llm_gate.sqlite
+    UZEX_BUILD_INFO_PATH: /app/BUILD_INFO.json
+    # explicit limits (override in .env only deliberately; values measured in docs/runbook.md)
+    UZEX_REQUEST_BUDGET_S: "70"   # total per question, including queue and rate-limit waits
+    UZEX_LLM_TIMEOUT_S: "30"      # one provider call
+    UZEX_LLM_MAX_ATTEMPTS: "3"
+    UZEX_SQL_TIMEOUT_S: "20"
+    UZEX_SQL_WORKERS: "2"
+    UZEX_MAX_RESULT_ROWS: "200"
+    UZEX_BOT_MAX_CONCURRENT: "2"
+    UZEX_BOT_MAX_WAITING: "20"
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "5"}
+  depends_on:
+    import:
+      condition: service_completed_successfully
+
+services:
+  import:
+    build:
+      context: .
+      args:
+        BUILD_COMMIT: ${BUILD_COMMIT:-none}
+    image: uzex-assistant:${UZEX_IMAGE_TAG:-local}
+    pull_policy: never
+    command: ["python", "-m", "uzex_assistant.importer", "ensure"]
+    environment:
+      UZEX_DATA_DIR: /data/source
+      UZEX_DB_PATH: /data/db/uzex.duckdb
+    volumes:
+      - ${UZEX_HOST_SOURCE:-./uzex_spot_data}:/data/source:ro
+      - ${UZEX_HOST_DATA:-./data}/db:/data/db
+      - ${UZEX_ENV_FILE:-./.env}:/app/.env:ro
+    restart: "no"
+    healthcheck: {disable: true}
+
+  web:
+    <<: *runtime
+    command: ["python", "-m", "uzex_assistant.web"]
+    ports:
+      - "127.0.0.1:${UZEX_HOST_PORT:-8000}:8000"     # behind a TLS reverse proxy on the host; not exposed publicly by itself
+    volumes:
+      - ${UZEX_HOST_SOURCE:-./uzex_spot_data}:/data/source:ro
+      - ${UZEX_HOST_DATA:-./data}/db:/data/db:ro
+      - ${UZEX_HOST_DATA:-./data}/state:/data/state
+      - ${UZEX_ENV_FILE:-./.env}:/app/.env:ro
+    mem_limit: 1g
+    cpus: 2.0
+
+  bot:
+    <<: *runtime
+    command: ["python", "-m", "uzex_assistant.bot"]
+    environment:
+      <<: *limits
+      UZEX_BOT_HEARTBEAT_PATH: /data/state/bot_heartbeat
+    volumes:
+      - ${UZEX_HOST_SOURCE:-./uzex_spot_data}:/data/source:ro
+      - ${UZEX_HOST_DATA:-./data}/db:/data/db:ro
+      - ${UZEX_HOST_DATA:-./data}/state:/data/state
+      - ${UZEX_ENV_FILE:-./.env}:/app/.env:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,sys,time; p='/data/state/bot_heartbeat'; sys.exit(0 if os.path.exists(p) and time.time()-os.path.getmtime(p) < 120 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    mem_limit: 1g
+    cpus: 1.0

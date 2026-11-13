@@ -1,0 +1,18 @@
+{
+ "_question": "2025-yilda bitimlar summasi bo'yicha eng yirik 5 ta sotuvchi kim?",
+ "language": "uz",
+ "intent": "ranking",
+ "period": {
+  "start": "2025-01-01",
+  "end": "2025-12-31",
+  "label": "2025"
+ },
+ "metrics": [
+  "trade_value_uzs",
+  "deal_count"
+ ],
+ "group_by": [
+  "seller"
+ ],
+ "top_n": 5
+}

@@ -1,0 +1,17 @@
+# secrets and local state never enter the image
+.env
+.env.*
+!.env.example
+data/
+uzex_spot_data/
+.venv/
+**/__pycache__/
+**/*.pyc
+web/node_modules/
+web/dist/
+eval/results/
+*.zip
+.claude/
+.git/
+docs/screenshots/
+BUILD_INFO.json

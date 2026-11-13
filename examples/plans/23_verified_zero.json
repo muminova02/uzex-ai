@@ -1,0 +1,20 @@
+{
+ "_question": "Сколько экспортных сделок в сумах?",
+ "language": "ru",
+ "intent": "count",
+ "metrics": [
+  "deal_count"
+ ],
+ "filters": [
+  {
+   "field": "contract_type",
+   "op": "eq",
+   "value": "export"
+  },
+  {
+   "field": "currency",
+   "op": "eq",
+   "value": "UZS"
+  }
+ ]
+}

@@ -1,0 +1,68 @@
+# data (raw dataset and generated databases)
+data/
+*.duckdb
+*.duckdb.wal
+*.zip
+
+# environments
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# secrets
+*.pem
+*.key
+secrets/
+
+# supplied dataset (kept unchanged, never committed)
+uzex_spot_data/
+*.building
+
+# web frontend build / deps (built on deploy: cd web && npm ci && npm run build)
+web/node_modules/
+web/dist/
+.playwright-mcp/
+
+# Local release work, generated evaluation output, and machine-specific state
+candidate/
+scratchpad/
+.local/
+web/dist-redesign/
+web/*.tsbuildinfo
+web/vite.redesign.config.ts
+eval/results/
+eval/golden_*.json
+BUILD_INFO.json
+src/*.egg-info/
+.claude/
+.vscode/
+.DS_Store
+
+# Internal submission and hosting records are not portfolio materials
+TRANSFER_NOTES.md
+UZEX_Hackathon_Prompts_EN.md
+docs/submission_*.md
+docs/final_checklist.md
+docs/prompt6_checklist.md
+docs/runbook.md
+docs/deployment_plan.md
+docs/eskiz_support_report.md
+docs/audit_checks_output.txt
+docs/live_llm_results.md
+docs/solution_spec.md
+docs/telegram_bot.md
+docs/web_dashboard.md
+docs/screenshots/
+deploy/eskiz/
+deploy/rollback_to_*.sh
+deploy/switch_to_redesign.sh
+scripts/watch_questions.py

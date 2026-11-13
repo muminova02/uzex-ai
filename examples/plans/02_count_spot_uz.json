@@ -1,0 +1,15 @@
+{
+ "_question": "Spot shartnomalar bo'yicha nechta bitim bor?",
+ "language": "uz",
+ "intent": "count",
+ "metrics": [
+  "deal_count"
+ ],
+ "filters": [
+  {
+   "field": "contract_form",
+   "op": "eq",
+   "value": "spot"
+  }
+ ]
+}

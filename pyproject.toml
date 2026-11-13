@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uzex-assistant"
+version = "0.2.0"
+description = "UZEX Data Assistant: grounded Uzbek/Russian Q&A over the UZEX hackathon deals dataset"
+requires-python = ">=3.12,<3.13"
+# Exact versions are pinned in requirements.lock (pip freeze from the verified .venv).
+dependencies = [
+  "duckdb==2.0.0",
+  "sqlglot==30.29.0",
+  "pydantic==2.13.5",
+  "pydantic-settings==2.16.2",
+  "aiogram==3.31.0",
+  "python-dotenv==1.2.4",
+  "anthropic==2.4.0",
+  "groq==1.7.0",
+  "fastapi==0.162.0",
+  "uvicorn[standard]==0.54.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "pandas==3.1.1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "smoke: real-dataset smoke tests (need the prepared DuckDB / raw CSVs)",
+  "live: real LLM API calls (skipped unless UZEX_RUN_LIVE_LLM=1 and a provider + key in .env)",
+]

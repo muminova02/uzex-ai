@@ -1,0 +1,22 @@
+{
+ "_question": "Сравни количество и сумму сделок в 2026 году с 2025 годом",
+ "language": "ru",
+ "intent": "comparison",
+ "compare_periods": [
+  {
+   "start": "2025-01-01",
+   "end": "2025-12-31",
+   "label": "2025"
+  },
+  {
+   "start": "2026-01-01",
+   "end": "2026-12-31",
+   "label": "2026"
+  }
+ ],
+ "align_equivalent_periods": true,
+ "metrics": [
+  "deal_count",
+  "trade_value_uzs"
+ ]
+}

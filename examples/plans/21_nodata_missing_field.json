@@ -1,0 +1,14 @@
+{
+ "_question": "Какая прибыль была у продавцов в 2025?",
+ "language": "ru",
+ "intent": "aggregate",
+ "period": {
+  "start": "2025-01-01",
+  "end": "2025-12-31",
+  "label": "2025"
+ },
+ "metrics": [],
+ "missing_fields": [
+  "profit"
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "_question": "Сколько сделок аннулировано из-за неоплаты?",
+ "language": "ru",
+ "intent": "count",
+ "metrics": [
+  "deal_count"
+ ],
+ "filters": [
+  {
+   "field": "status",
+   "op": "eq",
+   "value": "cancelled_unpaid"
+  }
+ ]
+}

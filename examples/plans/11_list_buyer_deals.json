@@ -1,0 +1,21 @@
+{
+ "_question": "5 крупнейших сделок по хлопку-сырцу в марте 2026",
+ "language": "ru",
+ "intent": "list",
+ "period": {
+  "start": "2026-03-01",
+  "end": "2026-03-31"
+ },
+ "entities": [
+  {
+   "kind": "product",
+   "text": "хлопку-сырцу",
+   "catalog_hint": "Хлопок-сырец"
+  }
+ ],
+ "order": {
+  "by": "amount_uzs",
+  "direction": "desc"
+ },
+ "top_n": 5
+}

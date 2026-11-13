@@ -1,0 +1,13 @@
+{
+ "_question": "Сколько сделок будет в 2027 году?",
+ "language": "ru",
+ "intent": "count",
+ "period": {
+  "start": "2027-01-01",
+  "end": "2027-12-31",
+  "label": "2027"
+ },
+ "metrics": [
+  "deal_count"
+ ]
+}
